@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Recetas</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/inicio">Inicio</a>
+      </li>
+      <li class="nav-item" id="publicarLink">
+        <a class="nav-link" href="/buscar">Publicar receta</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/buscar">Buscar Recetas</a>
+      </li>
+      <li class="nav-item" id="loginLink">
+        <a class="nav-link" href="/login">Iniciar Sesión</a>
+      </li>
+      <li class="nav-item d-none" id="logoutLink">
+        <a class="nav-link" href="#" onclick="logout()">Cerrar Sesión</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  // Verificar si el usuario está autenticado en base al token JWT
+  function checkAuthentication() {
+    const token = localStorage.getItem("jwtToken");
+    const loginLink = document.getElementById("loginLink");
+    const logoutLink = document.getElementById("logoutLink");
+    const publicarLink = document.getElementById("publicarLink");
+
+    if (token) {
+      // Usuario autenticado: mostrar "Cerrar Sesión" y ocultar "Iniciar Sesión"
+      loginLink.classList.add("d-none");
+      publicarLink.classList.remove("d-none");
+      logoutLink.classList.remove("d-none");
+    } else {
+      // Usuario no autenticado: mostrar "Iniciar Sesión" y ocultar "Cerrar Sesión"
+      loginLink.classList.remove("d-none");
+      publicarLink.classList.add("d-none");
+      logoutLink.classList.add("d-none");
+    }
+  }
+
+  // Función para cerrar sesión
+  function logout() {
+    localStorage.removeItem("jwtToken"); // Eliminar el token JWT
+    alert("Sesión cerrada con éxito.");
+    window.location.href = "/login"; // Redirigir al login
+  }
+
+  // Ejecutar la verificación de autenticación al cargar la página
+  document.addEventListener("DOMContentLoaded", checkAuthentication);
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
