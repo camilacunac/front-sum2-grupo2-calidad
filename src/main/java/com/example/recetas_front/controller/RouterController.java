@@ -46,4 +46,9 @@ public class RouterController {
     public String noAutorizado() {
         return "403";
     }
+
+    @GetMapping("/admin")
+    public String adminPanel() {
+        return "administracion";
+    }
 }
